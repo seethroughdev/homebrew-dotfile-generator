@@ -1,0 +1,15 @@
+{
+  "name": "cask-dotfile",
+  "version": "0.0.1",
+  "description": "A dotfile generator for brew cask",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "seethroughtrees",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "lodash": "~2.4.0",
+    "request": "~2.27.0"
+  }
+}
