@@ -10,6 +10,6 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "lodash": "~2.4.0",
-    "request": "~2.27.0"
+    "requestify": "~0.1.16"
   }
 }
