@@ -1,10 +1,13 @@
 // requires
-var _       = require('lodash'),
-    requestify = require('requestify'),
-    removeExtension = require('./helpers/remove-extension');
+var _           = require('lodash'),
+    requestify  = require('requestify'),
+    fs          = require('fs'),
+    Q           = require("q"),
+    removeExtension = require('./helpers/remove-extension'),
+    parameterize = require('./helpers/parameterize');
 
 // params
-var path = process.argv[2],
+var path = process.argv[2] || "/Applications",
     githubUrl = 'https://api.github.com/repos/phinze/homebrew-cask/contents/Casks';
 
 var options = {
@@ -32,8 +35,21 @@ requestify.get(githubUrl, options)
 
   }).then(function(caskList) {
 
-    console.log(caskList);
+    // console.log(caskList);
 
   }, function(err) {
     console.log('ERROR: ' + err);
   });
+
+fs.readdir(path, function(err, files) {
+  if (err)
+    return err;
+
+  _.forEach(files, function(val, index) {
+    val = removeExtension(val);
+    val = parameterize(val);
+    files[index] = val;
+  })
+
+  console.log(files);
+})

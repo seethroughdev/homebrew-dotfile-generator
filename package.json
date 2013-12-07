@@ -11,5 +11,8 @@
   "dependencies": {
     "lodash": "~2.4.0",
     "requestify": "~0.1.16"
+  },
+  "devDependencies": {
+    "q": "~0.9.7"
   }
 }
