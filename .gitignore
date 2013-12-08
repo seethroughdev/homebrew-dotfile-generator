@@ -38,3 +38,5 @@ Icon
 .Trashes
 
 
+# Additional
+tests/*.js

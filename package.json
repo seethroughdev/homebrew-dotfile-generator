@@ -13,6 +13,8 @@
     "q-io": "~1.10.6"
   },
   "devDependencies": {
-    "testem": "~0.5.12"
+    "testem": "~0.5.12",
+    "mocha": "~1.15.1",
+    "chai": "~1.8.1"
   }
 }
