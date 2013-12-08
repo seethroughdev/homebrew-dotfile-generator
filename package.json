@@ -1,5 +1,5 @@
 {
-  "name": "cask-dotfile",
+  "name": "cask-dotfile-generator",
   "version": "0.0.1",
   "description": "A dotfile generator for brew cask",
   "main": "app.js",
