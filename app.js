@@ -52,7 +52,7 @@ getGithubFiles
       })
       .then(function() {
         getCommonFiles();
-      });
+      }).fin();
   }, function() {
     console.log('ERROR: Cask Files could not be retreived!');
   }).fin();
