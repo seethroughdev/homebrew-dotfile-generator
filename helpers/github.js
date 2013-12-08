@@ -1,5 +1,6 @@
 var requestObj = {
-  url: 'https://api.github.com/repos/phinze/homebrew-cask/contents/Casks',
+  base: 'https://api.github.com',
+  url: '/repos/phinze/homebrew-cask/contents/Casks',
   method: 'GET',
   headers: {
     'Accept': 'application/vnd.github.beta+json',
