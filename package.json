@@ -11,5 +11,8 @@
   "dependencies": {
     "lodash": "~2.4.0",
     "q-io": "~1.10.6"
+  },
+  "devDependencies": {
+    "testem": "~0.5.12"
   }
 }
