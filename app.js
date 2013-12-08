@@ -5,6 +5,7 @@ var _               = require('lodash'),
     HTTP            = require('q-io/http'),
     removeExtension = require('./helpers/remove-extension'),
     parameterize    = require('./helpers/parameterize'),
+    githubReqObj    = require('./helpers/github'),
 
     // params
     localPath       = '/opt/homebrew-cask/Caskroom/',
@@ -15,20 +16,13 @@ var _               = require('lodash'),
     appFiles        = [],
     allLocalFiles   = [],
     caskFiles       = [],
-    commonFiles     = [],
+    commonFiles     = [];
 
-    requestObj      = {
-      url: 'https://api.github.com/repos/phinze/homebrew-cask/contents/Casks',
-      method: 'GET',
-      headers: {
-        'Accept': 'application/vnd.github.beta+json',
-        'User-Agent': 'A test application for homebrew cask dotfile'
-      }
-    };
+
 
 
 // promises
-var getGithubFiles  = HTTP.request(requestObj);
+var getGithubFiles  = HTTP.request(githubReqObj);
 var getLocalFiles   = FS.list(localPath);
 var getAppFiles     = FS.list(appPath);
 var getCommonFiles  = function() {
