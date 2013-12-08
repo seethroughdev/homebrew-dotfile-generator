@@ -7,10 +7,13 @@ var _               = require('lodash'),
     parameterize    = require('./helpers/parameterize'),
 
     // params
-    path            = process.argv[2] || "/Applications",
+    localPath       = '/opt/homebrew-cask/Caskroom/',
+    appPath         = '/Applications',
 
     // main arrays
     localFiles      = [],
+    appFiles        = [],
+    allLocalFiles   = [],
     caskFiles       = [],
     commonFiles     = [],
 
@@ -23,17 +26,20 @@ var _               = require('lodash'),
       }
     };
 
+
 // promises
 var getGithubFiles  = HTTP.request(requestObj);
-var getLocalFiles   = FS.list(path);
-var getCommonFiles = function() {
-  Q.all([getGithubFiles, getLocalFiles]).done(function() {
-    commonFiles = _.intersection(localFiles, caskFiles).sort();
+var getLocalFiles   = FS.list(localPath);
+var getAppFiles     = FS.list(appPath);
+var getCommonFiles  = function() {
+  Q.all([getGithubFiles, gatherLocalApps]).done(function() {
+    commonFiles = _.intersection(appFiles, caskFiles).sort();
     console.log(commonFiles);
   })
 };
 
 
+// get File list from Brew Cask Github files list
 getGithubFiles
   .then(function(res) {
     res.body.read()
@@ -58,6 +64,7 @@ getGithubFiles
   }).fin();
 
 
+// get File list from /opt/homebrew-cask/Caskroom/
 getLocalFiles
   .then(function(files) {
     _.forEach(files, function(val, i) {
@@ -67,6 +74,25 @@ getLocalFiles
     });
     return files;
   }, function() {
-    console.log('ERROR: Local Files could not be retrieved!');
+    console.log('ERROR: Local Cask Files could not be retrieved!');
   }).fin();
 
+
+// Get File list from /Applications
+getAppFiles
+  .then(function(files) {
+    _.forEach(files, function(val, i) {
+      val = removeExtension(val);
+      val = parameterize(val);
+      appFiles.push(val);
+    });
+    return files;
+  }, function() {
+    console.log('ERROR: Local App Files could not be retrieved!');
+  }).fin();
+
+
+// merge File list from /Application and /opt/... before comparing
+var gatherLocalApps = Q.all([getLocalFiles, getAppFiles]).done(function() {
+  allLocalFiles = _.merge(localFiles, appFiles);
+});
