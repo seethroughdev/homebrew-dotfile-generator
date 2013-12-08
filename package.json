@@ -4,13 +4,15 @@
   "description": "A dotfile generator for brew cask",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app",
+    "test": "testem"
   },
   "author": "seethroughtrees",
   "license": "BSD-2-Clause",
   "dependencies": {
     "lodash": "~2.4.0",
-    "q-io": "~1.10.6"
+    "q-io": "~1.10.6",
+    "q": "~0.9.7"
   },
   "devDependencies": {
     "testem": "~0.5.12",
