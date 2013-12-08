@@ -26,9 +26,11 @@ var getGithubFiles  = HTTP.request(githubReqObj);
 var getLocalFiles   = FS.list(localPath);
 var getAppFiles     = FS.list(appPath);
 var getCommonFiles  = function() {
-  Q.all([getGithubFiles, gatherLocalApps]).done(function() {
-    commonFiles = _.intersection(appFiles, caskFiles).sort();
-    console.log(commonFiles);
+  Q.all([getGithubFiles, gatherLocalApps]).then(function() {
+    commonFiles = _.intersection(allLocalFiles, caskFiles).sort();
+    return commonFiles;
+  }).done(function(files) {
+    console.log(files);
   })
 };
 

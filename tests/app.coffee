@@ -8,14 +8,24 @@ chai.use chaiHttp
 githubReqObj = require('../helpers/github')
 
 describe "github test", ->
+  res = {}
 
-  it "should connect with a 200 status", ->
-    res = chai.request(githubReqObj.url)
+  before (done) ->
+    chai.request(githubReqObj.url)
       .get()
       .req (req) ->
         req.set
             'Accept': 'application/vnd.github.beta+json',
             'User-Agent': 'A test application for homebrew cask dotfile'
         return
-      .res (res) ->
-        expect(res).to.have.status 200
+      .res (response) ->
+        res = response
+        done()
+        return
+    return
+
+  it "should connect with a 200 status", ->
+    expect(res).to.have.status 200
+    return
+
+  return
