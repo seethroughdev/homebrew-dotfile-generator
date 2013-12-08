@@ -10,11 +10,10 @@ githubReqObj = require('../helpers/github')
 describe "github test", ->
 
   it "should connect with a 200 status", ->
-    res = chai.request(githubReqObj.base)
-      .get(githubReqObj.url)
+    res = chai.request(githubReqObj.url)
+      .get()
       .req (req) ->
-        req
-          .set
+        req.set
             'Accept': 'application/vnd.github.beta+json',
             'User-Agent': 'A test application for homebrew cask dotfile'
         return
