@@ -1,55 +1,72 @@
 // requires
-var _           = require('lodash'),
-    requestify  = require('requestify'),
-    fs          = require('fs'),
-    Q           = require("q"),
+var _               = require('lodash'),
+    Q               = require('q'),
+    FS              = require('q-io/fs'),
+    HTTP            = require('q-io/http'),
     removeExtension = require('./helpers/remove-extension'),
-    parameterize = require('./helpers/parameterize');
+    parameterize    = require('./helpers/parameterize'),
 
-// params
-var path = process.argv[2] || "/Applications",
-    githubUrl = 'https://api.github.com/repos/phinze/homebrew-cask/contents/Casks';
+    // params
+    path            = process.argv[2] || "/Applications",
 
-var options = {
-  headers: {
-    'Accept': 'application/vnd.github.beta+json',
-    'User-Agent': 'A test application for homebrew cask dotfile'
-  }
+    // main arrays
+    localFiles      = [],
+    caskFiles       = [],
+    commonFiles     = [],
+
+    requestObj      = {
+      url: 'https://api.github.com/repos/phinze/homebrew-cask/contents/Casks',
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.github.beta+json',
+        'User-Agent': 'A test application for homebrew cask dotfile'
+      }
+    };
+
+// promises
+var getGithubFiles  = HTTP.request(requestObj);
+var getLocalFiles   = FS.list(path);
+var getCommonFiles = function() {
+  Q.all([getGithubFiles, getLocalFiles]).done(function() {
+    commonFiles = _.intersection(localFiles, caskFiles).sort();
+    console.log(commonFiles);
+  })
 };
 
-var cask = "",
-    caskList = [];
 
-requestify.get(githubUrl, options)
+getGithubFiles
   .then(function(res) {
+    res.body.read()
+      .then(function(res) {
+        return JSON.parse(res);
+      })
+      .then(function(res) {
+        _.forEach(res, function(val, i) {
+          caskFiles.push(val.name);
+        });
+      })
+      .then(function() {
+        _.forEach(caskFiles, function(val, i) {
+          caskFiles[i] = removeExtension(val);
+        });
+      })
+      .then(function() {
+        getCommonFiles();
+      });
+  }, function() {
+    console.log('ERROR: Cask Files could not be retreived!');
+  }).fin();
 
-    return res.getBody();
 
-  }).then(function(res) {
-
-    _.forEach(res, function(val, key) {
-      cask = removeExtension(val.name);
-      caskList.push(cask);
+getLocalFiles
+  .then(function(files) {
+    _.forEach(files, function(val, i) {
+      val = removeExtension(val);
+      val = parameterize(val);
+      localFiles.push(val);
     });
-    return caskList;
+    return files;
+  }, function() {
+    console.log('ERROR: Local Files could not be retrieved!');
+  }).fin();
 
-  }).then(function(caskList) {
-
-    // console.log(caskList);
-
-  }, function(err) {
-    console.log('ERROR: ' + err);
-  });
-
-fs.readdir(path, function(err, files) {
-  if (err)
-    return err;
-
-  _.forEach(files, function(val, index) {
-    val = removeExtension(val);
-    val = parameterize(val);
-    files[index] = val;
-  })
-
-  console.log(files);
-})
