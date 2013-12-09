@@ -7,7 +7,7 @@ var _               = require('lodash'),
     fileTemplate    = require('./helpers/file-template'),
     getArgv         = require('./helpers/parse-arg'),
     getLocalFiles   = require('./helpers/get-local-files'),
-    getRemoteFiles  = require('./helpers/get-github-files'),
+    getRemoteFiles  = require('./helpers/get-remote-files'),
 
     // params
     optPath       = '/opt/homebrew-cask/Caskroom/',
