@@ -14,7 +14,7 @@ var _               = require('lodash'),
     appPath         = '/Applications',
     installAppDir   = getArgv(process.argv),
 
-    // main arrays
+    // instantiate arrays
     localFiles      = [],
     appFiles        = [],
     allLocalFiles   = [],
@@ -39,10 +39,9 @@ var getCommonFiles  = function() {
     .then(function(text) {
       FS.write(".cask", text).then(function() {
         console.log('Your file ".cask" has been written to the current directory!');
-        console.log('Simply type "sh .cask" to get started! ');
+        console.log('Move to your home directory or simply type "sh .cask" to get started! ');
       });
     }).fin();
-
 };
 
 
