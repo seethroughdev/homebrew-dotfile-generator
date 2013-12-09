@@ -8,14 +8,16 @@ var _               = require('lodash'),
     githubReqObj    = require('./helpers/github'),
     fileTemplate    = require('./helpers/file-template'),
     getArgv         = require('./helpers/parse-arg'),
+    getLocalFiles   = require('./helpers/get-local-files'),
+    getRemoteFiles  = require('./helpers/get-github-files'),
 
     // params
-    localPath       = '/opt/homebrew-cask/Caskroom/',
+    optPath       = '/opt/homebrew-cask/Caskroom/',
     appPath         = '/Applications',
     installAppDir   = getArgv(process.argv),
 
     // instantiate arrays
-    localFiles      = [],
+    optFiles        = [],
     appFiles        = [],
     allLocalFiles   = [],
     caskFiles       = [],
@@ -23,82 +25,50 @@ var _               = require('lodash'),
 
 
 // promises
-var getGithubFiles  = HTTP.request(githubReqObj);
-var getLocalFiles   = FS.list(localPath);
-var getAppFiles     = FS.list(appPath);
-var getCommonFiles  = function() {
-  Q.all([getGithubFiles, gatherLocalApps])
-    .then(function() {
-      commonFiles = _.intersection(allLocalFiles, caskFiles).sort();
-      return commonFiles;
-    })
-    .then(function(files) {
-      var text = fileTemplate(files, installAppDir);
-      return text;
-    })
-    .then(function(text) {
-      FS.write(".cask", text).then(function() {
-        console.log('Your file ".cask" has been written to the current directory!');
-        console.log('Move to your home directory or simply type "sh .cask" to get started! ');
-      });
-    }).fin();
-};
+var getGithubFiles  = getRemoteFiles(githubReqObj);
+var getOptFiles     = getLocalFiles(optPath);
+var getAppFiles     = getLocalFiles(appPath);
+var gatherLocalApps = Q.all([getOptFiles, getAppFiles]);
+var getCommonFiles  = Q.all([getGithubFiles, gatherLocalApps]);
 
+getOptFiles.then(function(files) {
+  optFiles = files;
+}).fin();
 
-// get File list from Brew Cask Github files list
-getGithubFiles
-  .then(function(res) {
-    res.body.read()
-      .then(function(res) {
-        return JSON.parse(res);
-      })
-      .then(function(res) {
-        _.forEach(res, function(val, i) {
-          caskFiles.push(val.name);
-        });
-      })
-      .then(function() {
-        _.forEach(caskFiles, function(val, i) {
-          caskFiles[i] = removeExtension(val);
-        });
-      })
-      .then(function() {
-        getCommonFiles();
-      }).fin();
-  }, function() {
-    console.log('ERROR: Cask Files could not be retreived!');
-  }).fin();
-
-
-// get File list from /opt/homebrew-cask/Caskroom/
-getLocalFiles
-  .then(function(files) {
-    _.forEach(files, function(val, i) {
-      val = removeExtension(val);
-      val = parameterize(val);
-      localFiles.push(val);
-    });
-    return files;
-  }, function() {
-    console.log('ERROR: Local Cask Files could not be retrieved!');
-  }).fin();
-
-
-// Get File list from /Applications
-getAppFiles
-  .then(function(files) {
-    _.forEach(files, function(val, i) {
-      val = removeExtension(val);
-      val = parameterize(val);
-      appFiles.push(val);
-    });
-    return files;
-  }, function() {
-    console.log('ERROR: Local App Files could not be retrieved!');
-  }).fin();
-
+getAppFiles.then(function(files) {
+  appFiles = files;
+}).fin();
 
 // merge File list from /Application and /opt/... before comparing
-var gatherLocalApps = Q.all([getLocalFiles, getAppFiles]).done(function() {
-  allLocalFiles = _.merge(localFiles, appFiles);
+gatherLocalApps.done(function() {
+  allLocalFiles = _.merge(optFiles, appFiles);
 });
+
+getGithubFiles.then(function(res) {
+  _.forEach(res, function(val, i) {
+    caskFiles.push(val.name);
+  })
+  return caskFiles;
+}).then(function(files) {
+  _.forEach(files, function(val, i) {
+    caskFiles[i] = removeExtension(val);
+  });
+  return caskFiles;
+}).fin();
+
+
+getCommonFiles
+  .then(function() {
+    commonFiles = _.intersection(allLocalFiles, caskFiles).sort();
+    return commonFiles;
+  })
+  .then(function(files) {
+    var text = fileTemplate(files, installAppDir);
+    return text;
+  })
+  .then(function(text) {
+    FS.write(".cask", text).then(function() {
+      console.log('Your file ".cask" has been written to the current directory!');
+      console.log('Move to your home directory or simply type "sh .cask" to get started! ');
+    });
+  }).fin();
