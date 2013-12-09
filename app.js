@@ -35,12 +35,8 @@ var getCommonFiles  = function() {
       return text;
     })
     .then(function(text) {
-      console.log('Writing .cask file to current directory...');
-      return text;
-    })
-    .then(function(text) {
       FS.write(".cask", text).then(function() {
-        console.log('Your file (.cask) has been written to the current directory!');
+        console.log('Your file ".cask" has been written to the current directory!');
         console.log('Simply type "sh .cask" to get started! ');
       });
     }).fin();
@@ -50,10 +46,6 @@ var getCommonFiles  = function() {
 
 // get File list from Brew Cask Github files list
 getGithubFiles
-  .then(function(res) {
-    console.log('Loading Cask Files list...');
-    return res;
-  })
   .then(function(res) {
     res.body.read()
       .then(function(res) {
@@ -80,10 +72,6 @@ getGithubFiles
 // get File list from /opt/homebrew-cask/Caskroom/
 getLocalFiles
   .then(function(files) {
-    console.log('Loading Local Files from Caskroom...');
-    return files;
-  })
-  .then(function(files) {
     _.forEach(files, function(val, i) {
       val = removeExtension(val);
       val = parameterize(val);
@@ -97,10 +85,6 @@ getLocalFiles
 
 // Get File list from /Applications
 getAppFiles
-  .then(function(files) {
-    console.log('Loading Local Files from Applications directory...');
-    return files;
-  })
   .then(function(files) {
     _.forEach(files, function(val, i) {
       val = removeExtension(val);
