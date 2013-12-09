@@ -2,9 +2,7 @@
 var _               = require('lodash'),
     Q               = require('q'),
     FS              = require('q-io/fs'),
-    HTTP            = require('q-io/http'),
     removeExtension = require('./helpers/remove-extension'),
-    parameterize    = require('./helpers/parameterize'),
     githubReqObj    = require('./helpers/github'),
     fileTemplate    = require('./helpers/file-template'),
     getArgv         = require('./helpers/parse-arg'),
@@ -31,6 +29,7 @@ var getAppFiles     = getLocalFiles(appPath);
 var gatherLocalApps = Q.all([getOptFiles, getAppFiles]);
 var getCommonFiles  = Q.all([getGithubFiles, gatherLocalApps]);
 
+// get all local applications from Applications and /opt/
 getOptFiles.then(function(files) {
   optFiles = files;
 }).fin();
@@ -44,6 +43,7 @@ gatherLocalApps.done(function() {
   allLocalFiles = _.merge(optFiles, appFiles);
 });
 
+// get list of files from github object
 getGithubFiles.then(function(res) {
   _.forEach(res, function(val, i) {
     caskFiles.push(val.name);
