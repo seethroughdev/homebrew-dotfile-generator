@@ -32,9 +32,14 @@ var getCommonFiles  = function() {
     })
     .then(function(files) {
       var text = fileTemplate(files);
-      console.log(text);
       return text;
     })
+    .then(function(text) {
+      FS.write(".cask", text).then(function() {
+        console.log('Your file (.cask) has been written to the current directory!');
+        console.log('Simply type "sh .cask" to get started! ');
+      });
+    }).fin();
 
 };
 

@@ -40,3 +40,4 @@ Icon
 
 # Additional
 tests/*.js
+.cask
