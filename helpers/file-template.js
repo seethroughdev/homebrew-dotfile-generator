@@ -1,6 +1,6 @@
 var _ = require('lodash');
 
-module.exports = function(files) {
+module.exports = function(files, installAppDir) {
 
   var text = "";
 
@@ -16,7 +16,13 @@ module.exports = function(files) {
   text += "brew tap phinze/homebrew-cask\n";
   text += "brew install brew-cask\n\n";
   text += "function installcask() {\n";
-  text += "  brew cask install \"${@}\" 2> /dev/null\n";
+
+  if (installAppDir === true) {
+    text += "  brew cask install --appdir=\"/Applications\" \"${@}\" 2> /dev/null\n";
+  } else {
+    text += "  brew cask install \"${@}\" 2> /dev/null\n";
+  }
+
   text += "}\n\n";
 
   _.forEach(files, function(val, i) {

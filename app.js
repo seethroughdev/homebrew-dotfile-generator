@@ -7,10 +7,12 @@ var _               = require('lodash'),
     parameterize    = require('./helpers/parameterize'),
     githubReqObj    = require('./helpers/github'),
     fileTemplate    = require('./helpers/file-template'),
+    getArgv         = require('./helpers/parse-arg'),
 
     // params
     localPath       = '/opt/homebrew-cask/Caskroom/',
     appPath         = '/Applications',
+    installAppDir   = getArgv(process.argv),
 
     // main arrays
     localFiles      = [],
@@ -31,7 +33,7 @@ var getCommonFiles  = function() {
       return commonFiles;
     })
     .then(function(files) {
-      var text = fileTemplate(files);
+      var text = fileTemplate(files, installAppDir);
       return text;
     })
     .then(function(text) {
