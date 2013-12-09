@@ -28,12 +28,12 @@ describe "helpers", ->
 
   describe "parse-args", ->
 
-    it "should return true if -A flag is set", ->
-      arg = "node app -A"
+    it "should return true if -a flag is set", ->
+      arg = "node app -a"
       arg = arg.split(' ')
       expect(parseArgs(arg)).to.be.true
 
-    it "should return false if -A flag is not set", ->
+    it "should return false if -a flag is not set", ->
       arg = "node app"
       arg = arg.split(' ')
       expect(parseArgs(arg)).to.be.false
