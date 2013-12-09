@@ -6,6 +6,7 @@ var _               = require('lodash'),
     removeExtension = require('./helpers/remove-extension'),
     parameterize    = require('./helpers/parameterize'),
     githubReqObj    = require('./helpers/github'),
+    fileTemplate    = require('./helpers/file-template'),
 
     // params
     localPath       = '/opt/homebrew-cask/Caskroom/',
@@ -19,19 +20,22 @@ var _               = require('lodash'),
     commonFiles     = [];
 
 
-
-
 // promises
 var getGithubFiles  = HTTP.request(githubReqObj);
 var getLocalFiles   = FS.list(localPath);
 var getAppFiles     = FS.list(appPath);
 var getCommonFiles  = function() {
-  Q.all([getGithubFiles, gatherLocalApps]).then(function() {
-    commonFiles = _.intersection(allLocalFiles, caskFiles).sort();
-    return commonFiles;
-  }).done(function(files) {
-    console.log(files);
-  })
+  Q.all([getGithubFiles, gatherLocalApps])
+    .then(function() {
+      commonFiles = _.intersection(allLocalFiles, caskFiles).sort();
+      return commonFiles;
+    })
+    .then(function(files) {
+      var text = fileTemplate(files);
+      console.log(text);
+      return text;
+    })
+
 };
 
 
