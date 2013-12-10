@@ -4,8 +4,8 @@ If you use [homebrew-cask](https://github.com/phinze/homebrew-cask)
 to install applications, you can use a dotfile to keep your apps
 consistent across your devices.
 
-This app will check all of your the apps in your `/Applications`
-folder and any Casks you already have in your
+This app will check all of the Applications in your `/Applications`
+folder and any Casks you already have installed in your
 `/opt/homebrew-cask/Caskroom/`.
 
 Then compare them to a list of current Casks in the homebrew-cask
