@@ -32,16 +32,6 @@ After you have the file, just run `sh ~/.cask` to run the script!
 
 ### Options
 
-##### Specify Path
-
-By default, Brew Cask Dotfile Generator will generate the .cask file in
-the current directory.  If you want to specify a separate directory
-(like your home directory for instance), you can just add the path:
-
-```
-node app ~
-```
-
 ##### Set Applications Flag
 
 In homebrew-cask you can have your applications install directly into
@@ -50,13 +40,7 @@ the /Applications folder if you want by passing an option.
 With brew-cask-dotile you can add the option to your script by adding
 the argument `-a` after.
 
-So you would now do enter `node app -a`
-
-##### Or both
-
-```
-node app ~ -a
-```
+```node app -a```
 
 
 ### That's it!
