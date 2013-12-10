@@ -52,3 +52,22 @@ the argument `-a` after.
 
 So you would now do enter `node app -a`
 
+##### Or both
+
+```
+node app ~ -a
+```
+
+
+### That's it!
+
+Ping me if you have any questions or issues.
+
+### Contributing
+
+Feel like making this better?  Great.  Please just add tests to any changes.
+You can run the tests with `npm test`.
+
+They're written with [testem](https://github.com/airportyh/testem),
+[Mocha](http://visionmedia.github.io/mocha/) and [Chai](http://chaijs.com/).
+
