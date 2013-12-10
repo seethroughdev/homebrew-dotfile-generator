@@ -43,10 +43,6 @@ the argument `-a` after.
 ```node app -a```
 
 
-### That's it!
-
-Ping me if you have any questions or issues.
-
 ### Contributing
 
 Feel like making this better?  Great.  Please just add tests to any changes.
