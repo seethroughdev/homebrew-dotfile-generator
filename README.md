@@ -17,6 +17,8 @@ syncing and automating your installs across devices.
 
 ### Installation
 
+*this is not implemented yet*
+
 ```npm install brew-cask-dotfile```
 
 
