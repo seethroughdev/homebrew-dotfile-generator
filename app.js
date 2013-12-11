@@ -5,14 +5,14 @@ var _               = require('lodash'),
     removeExtension = require('./helpers/remove-extension'),
     githubReqObj    = require('./helpers/github'),
     fileTemplate    = require('./helpers/file-template'),
-    getArgv         = require('./helpers/parse-arg'),
+    parseArgs       = require('./helpers/parse-arg'),
     getLocalFiles   = require('./helpers/get-local-files'),
     getRemoteFiles  = require('./helpers/get-remote-files'),
 
     // params
     optPath         = '/opt/homebrew-cask/Caskroom/',
     appPath         = '/Applications',
-    installAppDir   = getArgv(process.argv),
+    appFlag   = parseArgs.getAppFlag(process.argv),
 
     // instantiate arrays
     optFiles        = [],
@@ -66,7 +66,7 @@ getCommonFiles
     return commonFiles;
   })
   .then(function(files) {
-    var text = fileTemplate(files, installAppDir);
+    var text = fileTemplate(files, appFlag);
     return text;
   })
   .then(function(text) {

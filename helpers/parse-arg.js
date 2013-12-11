@@ -1,10 +1,13 @@
-module.exports = function (args) {
-  var len = args.length - 1;
+var parseArgs = {
+  getAppFlag: function(args) {
+    var flag = args.indexOf('-a'.toLowerCase());
 
-  if (args[len].toLowerCase() === '-a') {
-    return true;
-  } else {
-    return false;
+    if (flag !== -1) {
+      return true;
+    } else {
+      return false;
+    }
   }
+}
 
-};
+module.exports = parseArgs;
