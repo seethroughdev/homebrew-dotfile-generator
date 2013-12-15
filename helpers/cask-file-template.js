@@ -25,7 +25,7 @@ module.exports = function(files, installAppDir) {
 
 
   _.forEach(files, function(val, i) {
-    text += "install " + val + "\n";
+    text += "cask install " + val + "\n";
   });
 
   return text;

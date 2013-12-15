@@ -10,9 +10,13 @@ module.exports = function(files) {
 
   text += "# Credit to pstadler for his Brewfile example - https://github.com/pstadler/dotfiles/blob/master/Brewfile\n\n\n"
 
+
   _.forEach(files, function(val, i) {
     text += "install " + val + "\n";
   });
+
+
+  text += "\ncleanup"
 
   return text;
 
