@@ -4,9 +4,10 @@ var _               = require('lodash'),
     FS              = require('q-io/fs'),
     getArgv         = require('./helpers/parse-arg'),
     getLocalFiles   = require('./helpers/get-local-files'),
+    brewFileTpl     = require('./helpers/brew-file-template'),
     caskFileTpl     = require('./helpers/cask-file-template'),
 
-    // params
+    // paths
     brewPath        = '/usr/local/Cellar/',
     optPath         = '/opt/homebrew-cask/Caskroom/',
     appPath         = '/Applications',
@@ -14,9 +15,6 @@ var _               = require('lodash'),
     installAppDir   = getArgv(process.argv),
 
     // instantiate arrays
-    localBrews      = [],
-    brewFiles       = [],
-    commonBrews     = [],
     optFiles        = [],
     appFiles        = [],
     allLocalCasks   = [],
@@ -31,12 +29,19 @@ var getLocalBrew    = getLocalFiles(brewPath),
     getCaskList     = getLocalFiles(caskPath),
     gatherLocalApps = Q.all([getOptFiles, getAppFiles]),
     getCommonCasks  = Q.all([getCaskList, gatherLocalApps]);
+    allComplete     = Q.all([getLocalBrew, getCommonCasks]);
 
 
 // get local brew formulae
 getLocalBrew.then(function(files) {
-  localBrews = files;
-}).fin();
+    var text = brewFileTpl(files);
+    return text;
+  })
+  .then(function(text) {
+    FS.write(".Brewfile", text).then(function() {
+      console.log('Your file "Brewfile" has been written to the current directory!');
+    });
+  }).fin();
 
 
 // get all local applications from Applications and /opt/
@@ -72,8 +77,11 @@ getCommonCasks
     return text;
   })
   .then(function(text) {
-    FS.write(".cask", text).then(function() {
+    FS.write(".Caskfile", text).then(function() {
       console.log('Your file ".cask" has been written to the current directory!');
-      console.log('Move to your home directory or simply type "sh .cask" to get started! ');
     });
   }).fin();
+
+allComplete.then(function() {
+  console.log('Move to your home directory and simply type "brew bundle" to get started! ');
+}).fin();
