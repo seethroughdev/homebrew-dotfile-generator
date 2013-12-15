@@ -2,11 +2,9 @@
 var _               = require('lodash'),
     Q               = require('q'),
     FS              = require('q-io/fs'),
-    removeExtension = require('./helpers/remove-extension'),
-    fileTemplate    = require('./helpers/file-template'),
     getArgv         = require('./helpers/parse-arg'),
     getLocalFiles   = require('./helpers/get-local-files'),
-    getRemoteFiles  = require('./helpers/get-remote-files'),
+    fileTemplate    = require('./helpers/file-template'),
 
     // params
     brewPath        = '/usr/local/Cellar/',
