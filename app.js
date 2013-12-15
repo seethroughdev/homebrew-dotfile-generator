@@ -32,6 +32,11 @@ var getLocalBrew    = getLocalFiles(brewPath),
     allComplete     = Q.all([getLocalBrew, getCommonCasks]);
 
 
+FS.exists(caskPath).then(function(bool) {
+  console.log(bool);
+});
+
+
 // get local brew formulae
 getLocalBrew.then(function(files) {
     var text = brewFileTpl(files);
