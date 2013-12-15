@@ -4,8 +4,9 @@ var _               = require('lodash'),
     FS              = require('q-io/fs'),
     getArgv         = require('./helpers/parse-arg'),
     getLocalFiles   = require('./helpers/get-local-files'),
-    brewFileTpl     = require('./helpers/brew-file-template'),
-    caskFileTpl     = require('./helpers/cask-file-template'),
+    brewTpl         = require('./templates/brew-template'),
+    brewFileTpl     = require('./templates/brew-file-template'),
+    caskFileTpl     = require('./templates/cask-file-template'),
 
     // paths
     brewPath        = '/usr/local/Cellar/',
@@ -35,6 +36,10 @@ var getLocalBrew    = getLocalFiles(brewPath),
 FS.exists(caskPath).then(function(bool) {
   console.log(bool);
 });
+
+
+// write brew file
+FS.write(".brew", brewTpl()).fin();
 
 
 // get local brew formulae
