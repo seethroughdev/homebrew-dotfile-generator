@@ -3,16 +3,16 @@ var _               = require('lodash'),
     Q               = require('q'),
     FS              = require('q-io/fs'),
     removeExtension = require('./helpers/remove-extension'),
-    githubReqObj    = require('./helpers/github'),
     fileTemplate    = require('./helpers/file-template'),
     getArgv         = require('./helpers/parse-arg'),
     getLocalFiles   = require('./helpers/get-local-files'),
     getRemoteFiles  = require('./helpers/get-remote-files'),
 
     // params
-    brewPath        = '/usr/local/Cellar',
+    brewPath        = '/usr/local/Cellar/',
     optPath         = '/opt/homebrew-cask/Caskroom/',
     appPath         = '/Applications',
+    caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/'
     installAppDir   = getArgv(process.argv),
 
     // instantiate arrays
@@ -28,11 +28,11 @@ var _               = require('lodash'),
 
 // promises
 var getLocalBrew    = getLocalFiles(brewPath),
-    getGithubCask   = getRemoteFiles(githubReqObj.cask),
     getOptFiles     = getLocalFiles(optPath),
     getAppFiles     = getLocalFiles(appPath),
+    getCaskList     = getLocalFiles(caskPath),
     gatherLocalApps = Q.all([getOptFiles, getAppFiles]),
-    getCommonCasks  = Q.all([getGithubCask, gatherLocalApps]);
+    getCommonCasks  = Q.all([getCaskList, gatherLocalApps]);
 
 
 // get local brew formulae
@@ -57,16 +57,9 @@ gatherLocalApps.done(function() {
 });
 
 
-// get list of files from github object
-getGithubCask.then(function(res) {
-  _.forEach(res, function(val, i) {
-    caskFiles.push(val.name);
-  })
-  return caskFiles;
-}).then(function(files) {
-  _.forEach(files, function(val, i) {
-    caskFiles[i] = removeExtension(val);
-  });
+// get list of all casks
+getCaskList.then(function(files) {
+  caskFiles = files;
 }).fin();
 
 
