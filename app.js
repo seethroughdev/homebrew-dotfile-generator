@@ -10,24 +10,35 @@ var _               = require('lodash'),
     getRemoteFiles  = require('./helpers/get-remote-files'),
 
     // params
+    brewPath        = '/usr/local/Cellar',
     optPath         = '/opt/homebrew-cask/Caskroom/',
     appPath         = '/Applications',
     installAppDir   = getArgv(process.argv),
 
     // instantiate arrays
+    localBrews      = [],
+    brewFiles       = [],
+    commonBrews     = [],
     optFiles        = [],
     appFiles        = [],
-    allLocalFiles   = [],
+    allLocalCasks   = [],
     caskFiles       = [],
-    commonFiles     = [];
+    commonCasks     = [];
 
 
 // promises
-var getGithubFiles  = getRemoteFiles(githubReqObj);
-var getOptFiles     = getLocalFiles(optPath);
-var getAppFiles     = getLocalFiles(appPath);
-var gatherLocalApps = Q.all([getOptFiles, getAppFiles]);
-var getCommonFiles  = Q.all([getGithubFiles, gatherLocalApps]);
+var getLocalBrew    = getLocalFiles(brewPath),
+    getGithubCask   = getRemoteFiles(githubReqObj.cask),
+    getOptFiles     = getLocalFiles(optPath),
+    getAppFiles     = getLocalFiles(appPath),
+    gatherLocalApps = Q.all([getOptFiles, getAppFiles]),
+    getCommonCasks  = Q.all([getGithubCask, gatherLocalApps]);
+
+
+// get local brew formulae
+getLocalBrew.then(function(files) {
+  localBrews = files;
+}).fin();
 
 
 // get all local applications from Applications and /opt/
@@ -42,12 +53,12 @@ getAppFiles.then(function(files) {
 
 // merge File list from /Application and /opt/... before comparing
 gatherLocalApps.done(function() {
-  allLocalFiles = _.merge(optFiles, appFiles);
+  allLocalCasks = _.merge(optFiles, appFiles);
 });
 
 
 // get list of files from github object
-getGithubFiles.then(function(res) {
+getGithubCask.then(function(res) {
   _.forEach(res, function(val, i) {
     caskFiles.push(val.name);
   })
@@ -60,10 +71,10 @@ getGithubFiles.then(function(res) {
 
 
 // find common files and feed them to file-template
-getCommonFiles
+getCommonCasks
   .then(function() {
-    commonFiles = _.intersection(allLocalFiles, caskFiles).sort();
-    return commonFiles;
+    commonCasks = _.intersection(allLocalCasks, caskFiles).sort();
+    return commonCasks;
   })
   .then(function(files) {
     var text = fileTemplate(files, installAppDir);

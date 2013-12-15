@@ -5,13 +5,13 @@ chaiHttp = require 'chai-http'
 chai.use chaiHttp
 
 # load github params
-githubReqObj = require('../helpers/github')
+githubCaskObj = require('../helpers/github')
 
-describe "github test", ->
+describe "github cask test", ->
   res = {}
 
   before (done) ->
-    chai.request(githubReqObj.url)
+    chai.request(githubCaskObj.cask.url)
       .get('')
       .req (req) ->
         req.set
