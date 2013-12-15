@@ -38,9 +38,7 @@ getLocalBrew.then(function(files) {
     return text;
   })
   .then(function(text) {
-    FS.write(".Brewfile", text).then(function() {
-      console.log('Your file "Brewfile" has been written to the current directory!');
-    });
+    FS.write(".Brewfile", text);
   }, function(err) {
     callError(err);
   }).fin();
@@ -85,9 +83,7 @@ getCommonCasks
     return text;
   })
   .then(function(text) {
-    FS.write(".Caskfile", text).then(function() {
-      console.log('Your file ".cask" has been written to the current directory!');
-    });
+    FS.write(".Caskfile", text);
   }, function(err) {
     callError(err);
   }).fin();
@@ -97,5 +93,5 @@ allComplete.then(function() {
 }).fin();
 
 function callError(err) {
-  console.log('ERROR: ' + err);
+  console.error('ERROR: ' + err);
 }
