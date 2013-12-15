@@ -41,16 +41,22 @@ getLocalBrew.then(function(files) {
     FS.write(".Brewfile", text).then(function() {
       console.log('Your file "Brewfile" has been written to the current directory!');
     });
+  }, function(err) {
+    callError(err);
   }).fin();
 
 
 // get all local applications from Applications and /opt/
 getOptFiles.then(function(files) {
   optFiles = files;
+}, function(err) {
+  callError(err);
 }).fin();
 
 getAppFiles.then(function(files) {
   appFiles = files;
+}, function(err) {
+  callError(err);
 }).fin();
 
 
@@ -63,6 +69,8 @@ gatherLocalApps.done(function() {
 // get list of all casks
 getCaskList.then(function(files) {
   caskFiles = files;
+}, function(err) {
+  callError(err);
 }).fin();
 
 
@@ -80,8 +88,14 @@ getCommonCasks
     FS.write(".Caskfile", text).then(function() {
       console.log('Your file ".cask" has been written to the current directory!');
     });
+  }, function(err) {
+    callError(err);
   }).fin();
 
 allComplete.then(function() {
   console.log('Move to your home directory and simply type "brew bundle" to get started! ');
 }).fin();
+
+function callError(err) {
+  console.log('ERROR: ' + err);
+}
