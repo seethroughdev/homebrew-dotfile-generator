@@ -4,7 +4,7 @@ var _               = require('lodash'),
     FS              = require('q-io/fs'),
     getArgv         = require('./helpers/parse-arg'),
     getLocalFiles   = require('./helpers/get-local-files'),
-    fileTemplate    = require('./helpers/file-template'),
+    caskFileTpl     = require('./helpers/cask-file-template'),
 
     // params
     brewPath        = '/usr/local/Cellar/',
@@ -68,7 +68,7 @@ getCommonCasks
     return commonCasks;
   })
   .then(function(files) {
-    var text = fileTemplate(files, installAppDir);
+    var text = caskFileTpl(files, installAppDir);
     return text;
   })
   .then(function(text) {
