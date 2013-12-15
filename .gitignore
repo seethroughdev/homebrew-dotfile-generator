@@ -41,3 +41,5 @@ Icon
 # Additional
 tests/*.js
 .cask
+.Brewfile
+.Caskfile
