@@ -4,7 +4,6 @@ var _               = require('lodash'),
     FS              = require('q-io/fs'),
     getArgv         = require('./helpers/parse-arg'),
     startBrewFiles  = require('./helpers/parse-brew-files'),
-    startCaskFiles  = require('./helpers/parse-cask-files'),
     brewTpl         = require('./templates/brew-template'),
 
     // paths
@@ -14,9 +13,27 @@ var _               = require('lodash'),
 
     // promises
     getLocalBrew    = startBrewFiles(),
-    getCommonCasks  = startCaskFiles(),
     writeBrew       = FS.write(".brew", brewTpl()),
     allComplete     = Q.all([getLocalBrew, getCommonCasks, writeBrew]);
+
+
+var getCommonCasks;
+
+// get Casks if homebrew-cask is installed
+FS.exists(caskPath)
+  .then(function(exists) {
+
+    if (!exists)
+      return console.log('Looks like you don\'t have brew-cask installed.  You should consider it!');
+
+    var startCaskFiles  = require('./helpers/parse-cask-files');
+    var getCommonCasks  = startCaskFiles();
+
+    getCommonCasks
+      .fail(function(err) {
+        console.log('ERROR: Caskfile was not written!');
+      }).fin();
+  });
 
 
 // complete promises
@@ -25,10 +42,6 @@ getLocalBrew
     console.log('ERROR: Brewfile was not written!', err);
   }).fin();
 
-getCommonCasks
-  .fail(function(err) {
-    console.log('ERROR: Caskfile was not written!', err);
-  }).fin();
 
 writeBrew
   .fail(function(err) {
