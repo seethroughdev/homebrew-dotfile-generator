@@ -69,7 +69,7 @@ getCommonCasks
   .then(function(text) {
     FS.exists('.Caskfile').then(function(exists) {
       if (exists) {
-        console.log('* Caskfile already exists!  Type -f to overwrite or specify a path.');
+        console.log('Caskfile already exists!\n* Type -f to overwrite it or specify a new path.');
       } else {
         FS.write('.Caskfile', text)
           .then(function() {

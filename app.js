@@ -21,7 +21,7 @@ var _               = require('lodash'),
 writeBrew
   .then(function(exists) {
     if (exists) {
-      console.log('* .brew already exists!  Type -f to overwrite or specify a path.');
+      console.log('.brew already exists!\n* Type -f to overwrite it or specify a new path.');
     } else {
       FS.write('.brew', brewTpl())
         .then(function() {

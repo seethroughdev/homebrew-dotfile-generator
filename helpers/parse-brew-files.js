@@ -18,7 +18,7 @@ getLocalBrew.then(function(files) {
   .then(function(text) {
     FS.exists('.Brewfile').then(function(exists) {
       if (exists) {
-        console.log('* Brewfile already exists!  Type -f to overwrite or specify a path.');
+        console.log('Brewfile already exists!\n* Type -f to overwrite it or specify a new path.');
       } else {
         FS.write('.Brewfile', text)
           .then(function() {
