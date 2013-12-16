@@ -5,8 +5,8 @@ var _               = require('lodash'),
     getArgv         = require('./helpers/parse-arg'),
     getLocalFiles   = require('./helpers/get-local-files'),
     brewTpl         = require('./templates/brew-template'),
-    brewFileTpl     = require('./templates/brew-file-template'),
     caskFileTpl     = require('./templates/cask-file-template'),
+    startBrewFiles  = require('./helpers/parse-brew-files'),
 
     // paths
     brewPath        = '/usr/local/Cellar/',
@@ -24,34 +24,25 @@ var _               = require('lodash'),
 
 
 // promises
-var getLocalBrew    = getLocalFiles(brewPath),
+var getLocalBrew    = FS.exists(brewPath),
     getOptFiles     = getLocalFiles(optPath),
     getAppFiles     = getLocalFiles(appPath),
     getCaskList     = getLocalFiles(caskPath),
     gatherLocalApps = Q.all([getOptFiles, getAppFiles]),
-    getCommonCasks  = Q.all([getCaskList, gatherLocalApps]);
+    getCommonCasks  = Q.all([getCaskList, gatherLocalApps]),
     allComplete     = Q.all([getLocalBrew, getCommonCasks]);
 
 
-FS.exists(caskPath).then(function(bool) {
-  console.log(bool);
-});
+getLocalBrew
+  .then(function(bool) {
+    return startBrewFiles()
+  }, function(err) {
+    callError(err);
+  }).fin();
 
 
 // write brew file
 FS.write(".brew", brewTpl()).fin();
-
-
-// get local brew formulae
-getLocalBrew.then(function(files) {
-    var text = brewFileTpl(files);
-    return text;
-  })
-  .then(function(text) {
-    FS.write(".Brewfile", text);
-  }, function(err) {
-    callError(err);
-  }).fin();
 
 
 // get all local applications from Applications and /opt/
