@@ -10,7 +10,7 @@ var argv = {
 function setArgs(args) {
   if (args.indexOf('-a') !== -1) {
     argv.appFolder = true;
-  };
+  }
 
   if (args.indexOf('-f') !== -1) {
     argv.force = true;
