@@ -70,6 +70,9 @@ getCommonCasks
     FS.write(".Caskfile", text);
   }, function(err) {
     callError(err);
+  })
+  .then(function() {
+    console.log('Caskfile was written to home...');
   }).fin();
 
 

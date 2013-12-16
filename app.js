@@ -19,6 +19,7 @@ var _               = require('lodash'),
 
 var getCommonCasks;
 
+
 // get Casks if homebrew-cask is installed
 FS.exists(caskPath)
   .then(function(exists) {
@@ -27,7 +28,8 @@ FS.exists(caskPath)
       return console.log('Looks like you don\'t have brew-cask installed.  You should consider it!');
 
     var startCaskFiles  = require('./helpers/parse-cask-files');
-    var getCommonCasks  = startCaskFiles();
+
+    getCommonCasks  = startCaskFiles();
 
     getCommonCasks
       .fail(function(err) {
