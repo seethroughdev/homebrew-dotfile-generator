@@ -46,11 +46,14 @@ getLocalBrew
 
 
 writeBrew
+  .then(function() {
+    console.log('- .brew file was written to home...');
+  })
   .fail(function(err) {
     console.log('ERROR: .brew file was not written!', err);
   }).fin();
 
 // onComplete
 allComplete.then(function() {
-  console.log('Move to your home directory and simply type "brew bundle" to get started! ');
+  console.log('Homebrew dotfiles were generated!');
 }).fin();

@@ -72,7 +72,7 @@ getCommonCasks
     callError(err);
   })
   .then(function() {
-    console.log('Caskfile was written to home...');
+    console.log('- Caskfile was written to home...');
   }).fin();
 
 

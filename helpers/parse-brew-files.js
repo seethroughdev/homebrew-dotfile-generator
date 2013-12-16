@@ -19,6 +19,9 @@ getLocalBrew.then(function(files) {
     FS.write('.Brewfile', text);
   }, function(err) {
     callError(err);
+  })
+  .then(function() {
+    console.log('- Brewfile was written to home...');
   }).fin();
 
 
