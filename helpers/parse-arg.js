@@ -8,6 +8,8 @@ var argv = {
 };
 
 function setArgs(args) {
+
+
   if (args.indexOf('-a') !== -1) {
     argv.appFolder = true;
   }
@@ -17,9 +19,11 @@ function setArgs(args) {
   }
 
   _.forEach(args, function(val, i) {
+    console.log(val + ' is val ' + i)
     FS.isDirectory(val)
       .then(function(exists) {
-        if (exists !== true)
+        console.log(exists)
+        if (exists)
           return
 
         argv.path = val;
