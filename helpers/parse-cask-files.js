@@ -67,12 +67,18 @@ getCommonCasks
     return text;
   })
   .then(function(text) {
-    FS.write(".Caskfile", text);
+    FS.exists('.Caskfile').then(function(exists) {
+      if (exists) {
+        console.log('* Caskfile already exists!  Type -f to overwrite or specify a path.');
+      } else {
+        FS.write('.Caskfile', text)
+          .then(function() {
+            console.log('- Caskfile was written to home...');
+          });
+      }
+    });
   }, function(err) {
     callError(err);
-  })
-  .then(function() {
-    console.log('- Caskfile was written to home...');
   }).fin();
 
 

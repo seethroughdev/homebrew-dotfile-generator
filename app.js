@@ -1,6 +1,5 @@
 // requires
 var _               = require('lodash'),
-    Q               = require('q'),
     FS              = require('q-io/fs'),
     getArgv         = require('./helpers/parse-arg'),
     startBrewFiles  = require('./helpers/parse-brew-files'),
@@ -12,48 +11,46 @@ var _               = require('lodash'),
     installAppDir   = getArgv(process.argv),
 
     // promises
+    writeBrew       = FS.exists('.brew'),
     getLocalBrew    = startBrewFiles(),
-    writeBrew       = FS.write(".brew", brewTpl()),
-    allComplete     = Q.all([getLocalBrew, getCommonCasks, writeBrew]);
+    getCommonCasks  = FS.exists(caskPath);
 
 
-var getCommonCasks;
+
+// write .brew
+writeBrew
+  .then(function(exists) {
+    if (exists) {
+      console.log('* .brew already exists!  Type -f to overwrite or specify a path.');
+    } else {
+      FS.write('.brew', brewTpl())
+        .then(function() {
+          console.log('- .brew was written to home...');
+        })
+    }
+  }).fin();
+
 
 
 // get Casks if homebrew-cask is installed
-FS.exists(caskPath)
+getCommonCasks
   .then(function(exists) {
 
     if (!exists)
       return console.log('Looks like you don\'t have brew-cask installed.  You should consider it!');
 
     var startCaskFiles  = require('./helpers/parse-cask-files');
+    return startCaskFiles();
 
-    getCommonCasks  = startCaskFiles();
-
-    getCommonCasks
-      .fail(function(err) {
-        console.log('ERROR: Caskfile was not written!');
-      }).fin();
-  });
+  })
+  .fail(function(err) {
+    console.log('ERROR: Caskfile was not written!');
+  }).fin();
 
 
-// complete promises
+
+// write Brewfile
 getLocalBrew
   .fail(function(err) {
     console.log('ERROR: Brewfile was not written!', err);
   }).fin();
-
-
-writeBrew
-  .then(function() {
-    console.log('- .brew file was written to home...');
-  })
-  .fail(function(err) {
-    console.log('ERROR: .brew file was not written!', err);
-  }).fin();
-
-// onComplete
-allComplete.then(function() {
-  console.log('Homebrew dotfiles were generated!');
-}).fin();

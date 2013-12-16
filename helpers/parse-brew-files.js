@@ -16,12 +16,18 @@ getLocalBrew.then(function(files) {
     return text;
   })
   .then(function(text) {
-    FS.write('.Brewfile', text);
+    FS.exists('.Brewfile').then(function(exists) {
+      if (exists) {
+        console.log('* Brewfile already exists!  Type -f to overwrite or specify a path.');
+      } else {
+        FS.write('.Brewfile', text)
+          .then(function() {
+            console.log('- Brewfile was written to home...');
+          });
+      }
+    });
   }, function(err) {
     callError(err);
-  })
-  .then(function() {
-    console.log('- Brewfile was written to home...');
   }).fin();
 
 
