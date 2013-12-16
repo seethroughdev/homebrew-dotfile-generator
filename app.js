@@ -1,77 +1,57 @@
 // requires
 var _               = require('lodash'),
-    Q               = require('q'),
     FS              = require('q-io/fs'),
-    removeExtension = require('./helpers/remove-extension'),
-    githubReqObj    = require('./helpers/github'),
-    fileTemplate    = require('./helpers/file-template'),
-    parseArgs       = require('./helpers/parse-arg'),
-    getLocalFiles   = require('./helpers/get-local-files'),
-    getRemoteFiles  = require('./helpers/get-remote-files'),
 
-    // params
-    optPath         = '/opt/homebrew-cask/Caskroom/',
-    appPath         = '/Applications',
-    appFlag   = parseArgs.getAppFlag(process.argv),
+    getArgv         = require('./helpers/parse-arg'),
+    startBrewFiles  = require('./helpers/parse-brew-files'),
+    brewTpl         = require('./templates/brew-template'),
 
-    // instantiate arrays
-    optFiles        = [],
-    appFiles        = [],
-    allLocalFiles   = [],
-    caskFiles       = [],
-    commonFiles     = [];
+    // paths
+    brewPath        = '/usr/local/Cellar/',
+    caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/'
+    installAppDir   = getArgv(process.argv),
+
+    // promises
+    writeBrew       = FS.exists('.brew'),
+    getLocalBrew    = startBrewFiles(),
+    getCommonCasks  = FS.exists(caskPath);
+
+console.log(installAppDir.path, installAppDir.force, installAppDir.appFolder);
 
 
-// promises
-var getGithubFiles  = getRemoteFiles(githubReqObj);
-var getOptFiles     = getLocalFiles(optPath);
-var getAppFiles     = getLocalFiles(appPath);
-var gatherLocalApps = Q.all([getOptFiles, getAppFiles]);
-var getCommonFiles  = Q.all([getGithubFiles, gatherLocalApps]);
+// write .brew
+writeBrew
+  .then(function(exists) {
+    if (exists) {
+      console.log('.brew already exists!\n* Type -f to overwrite it or specify a new path.');
+    } else {
+      FS.write('.brew', brewTpl())
+        .then(function() {
+          console.log('- .brew was written to home...');
+        })
+    }
+  }).fin();
 
 
-// get all local applications from Applications and /opt/
-getOptFiles.then(function(files) {
-  optFiles = files;
-}).fin();
 
-getAppFiles.then(function(files) {
-  appFiles = files;
-}).fin();
+// get Casks if homebrew-cask is installed
+getCommonCasks
+  .then(function(exists) {
 
+    if (!exists)
+      return console.log('Looks like you don\'t have brew-cask installed.  You should consider it!');
 
-// merge File list from /Application and /opt/... before comparing
-gatherLocalApps.done(function() {
-  allLocalFiles = _.merge(optFiles, appFiles);
-});
+    var startCaskFiles  = require('./helpers/parse-cask-files');
+    return startCaskFiles();
 
-
-// get list of files from github object
-getGithubFiles.then(function(res) {
-  _.forEach(res, function(val, i) {
-    caskFiles.push(val.name);
   })
-  return caskFiles;
-}).then(function(files) {
-  _.forEach(files, function(val, i) {
-    caskFiles[i] = removeExtension(val);
-  });
-}).fin();
+  .fail(function(err) {
+    console.log('ERROR: Caskfile was not written!');
+  }).fin();
 
 
-// find common files and feed them to file-template
-getCommonFiles
-  .then(function() {
-    commonFiles = _.intersection(allLocalFiles, caskFiles).sort();
-    return commonFiles;
-  })
-  .then(function(files) {
-    var text = fileTemplate(files, appFlag);
-    return text;
-  })
-  .then(function(text) {
-    FS.write(".cask", text).then(function() {
-      console.log('Your file ".cask" has been written to the current directory!');
-      console.log('Move to your home directory or simply type "sh .cask" to get started! ');
-    });
+// write Brewfile
+getLocalBrew
+  .fail(function(err) {
+    console.log('ERROR: Brewfile was not written!', err);
   }).fin();
