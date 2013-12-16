@@ -15,6 +15,7 @@ var _               = require('lodash'),
     getLocalBrew    = startBrewFiles(),
     getCommonCasks  = FS.exists(caskPath);
 
+console.log(installAppDir.path, installAppDir.force, installAppDir.appFolder);
 
 
 // write .brew
