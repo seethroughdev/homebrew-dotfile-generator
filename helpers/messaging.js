@@ -11,6 +11,6 @@ var messaging = {
   writeFail: function(val) {
     return console.log('ERROR: ' + val + ' was not written!');
   }
-}
+};
 
 module.exports = messaging;

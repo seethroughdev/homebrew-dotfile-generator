@@ -4,7 +4,6 @@ var FS              = require('q-io/fs'),
     parameterize    = require('./parameterize');
 
 module.exports = function (path) {
-  var files = [];
 
   var getFiles = FS.list(path);
 
@@ -18,7 +17,7 @@ module.exports = function (path) {
       return files;
     }, function() {
       console.log('ERROR: ' + path + ' files could not be retrieved!');
-    })
+    });
 
   return getFiles;
 
