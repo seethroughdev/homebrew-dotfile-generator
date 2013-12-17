@@ -29,7 +29,13 @@ Here's an example of each generated file:
 
 ### Usage
 
-Just type `node app` to generate your script files.
+Make sure your homebrew is up to date.
+
+```
+brew update
+```
+
+Then just type `node app` to generate your script files.
 
 
 ### Options
