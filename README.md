@@ -2,38 +2,31 @@
 
 You can run helpful homebrew scripts from dotfiles.
 
-This mini node app will generate 3 files for you:
+This mini app will scan all of your brew formulae, brew-casks and locally installed Applications, and generate 3 homebrew dotfiles.  It creates:
 
 - a **.brew file** for running standard homebrew actions
 - a **.Brewfile** which uses the new `brew bundle` feature to store a list
 of formulae for re-installing
 - a **.Caskfile** for [homebrew-cask](https://github.com/phinze/homebrew-cask).  Which also uses the new `brew bundle` feature.  This will load casks in the same way that the .Brewfile will load formulae
 
-**Homebrew Dotfile Generator** will actually scan all of your installed homebrew formulae and create the .Brewfile script for use with brew bundle.
+### Examples
 
-And it will also scan all of your local Applications and installed brew-casks, and compare them with a list of all available casks to create a customized .Caskfile.
-
-I find it pretty useful.
-
-
-See an example [here](https://gist.github.com/seethroughtrees/7902470);
-
-This app will check all of the Applications in your `/Applications`
-folder and any Casks you already have installed in your
-`/opt/homebrew-cask/Caskroom/`.
-
-Then compare them to a list of current Casks in the homebrew-cask
-Github Repo.
-
-Lastly, it will generate a .cask file that is a shell script for
-syncing and automating your installs across devices.
+- [.brew]() example
+- [.Brewfile]() example
+- [.Caskfile]() example
 
 
 ### Installation
 
-*this is not implemented yet*
+```
+  git clone https://github.com/seethroughtrees/homebrew-dotfile-generator.git
+  cd homebrew-dotfile-generator
+  npm install
+  node app
 
-```npm install brew-cask-dotfile```
+```
+
+
 
 
 ### Usage
