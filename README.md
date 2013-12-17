@@ -40,6 +40,9 @@ brew update
 
 Then just type `node app` to generate your script files.
 
+```
+node app
+```
 
 ### Options
 
