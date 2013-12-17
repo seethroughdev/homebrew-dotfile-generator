@@ -35,7 +35,7 @@ getCommonCasks
     if (!exists)
       return messaging.exists('brew-cask');
 
-    var startCaskFiles  = require('./helpers/parse-cask-files');
+    var startCaskFiles  = require('./modules/parse-cask-files');
     return startCaskFiles();
 
   })
