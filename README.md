@@ -31,6 +31,7 @@ Here's an example of each generated file:
 
 Just type `node app` to generate your script files.
 
+
 ### Options
 
 ##### Specify Path
@@ -60,6 +61,32 @@ directly into that folder.  If you pass the `-a` flag, Homebrew Dotfile Generato
 ```
 node app -a
 ```
+
+### Using your dotfiles
+
+You can use the **.brew** file by running it as a shell script in your terminal.
+
+```
+sh ~/.brew
+```
+
+Run your **.Brewfile** by using the new [brew bundle command](https://github.com/Homebrew/homebrew/pull/24107).
+
+```
+brew bundle /pathto/.Brewfile
+```
+
+Run your **.CaskFile** the same way:
+
+```
+brew bundle /pathto/.Caskfile
+```
+
+
+### Helpful Links
+
+- [Homebrew discussion](https://github.com/Homebrew/homebrew/pull/24107) re: Brewfile and Brew bundle
+- [How to use Brewfiles](https://coderwall.com/p/afmnbq) a good insight by Patrick Stadler
 
 
 ### Contributing
