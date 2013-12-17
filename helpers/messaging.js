@@ -1,9 +1,13 @@
+var getArgv = require('./parse-arg'),
+    writePath = getArgv.p || 'the current folder';
+
+
 var messaging = {
   exists: function(val) {
-    return console.log(val + ' already exists!  Change path or add -f to force');
+    return console.log(val + ' already exists!  Change path or add -f to force.');
   },
   writeSuccess: function(val) {
-    return console.log(val + ' was written to home...');
+    return console.log(val + ' was written to ' + writePath);
   },
   notInstalled: function(val) {
     return console.log('Looks like you don\'t have ' + val + ' installed.  You should consider it!');

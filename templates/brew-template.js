@@ -13,7 +13,7 @@ module.exports = function() {
   text += "brew upgrade\n\n";
 
   text += "# Remove outdated versions from the cellar\n";
-  text += "brew cleanufdsfdsfdsp\n\n";
+  text += "brew cleanup\n\n";
 
   return text;
 
