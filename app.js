@@ -9,11 +9,13 @@ var _               = require('lodash'),
 
     // paths
     brewPath        = '/usr/local/Cellar/',
-    caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/'
-    installAppDir   = getArgv(process.argv),
+    caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/',
+
+    // flags
+    overwriteFiles  = getArgv.f ? 'w' : 'wx',
 
     // promises
-    writeBrew       = FS.write('.brew', brewTpl(), 'wx'),
+    writeBrew       = FS.write('.brew', brewTpl(), overwriteFiles),
     getLocalBrew    = startBrewFiles(),
     getCommonCasks  = FS.exists(caskPath);
 

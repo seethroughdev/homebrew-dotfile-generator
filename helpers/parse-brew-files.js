@@ -1,8 +1,12 @@
     // requires
 var FS              = require('q-io/fs'),
     getLocalFiles   = require('./get-local-files'),
+    getArgv         = require('./parse-arg'),
     brewFileTpl     = require('../templates/brew-file-template'),
     messaging       = require('./messaging'),
+
+    // flags
+    overwriteFiles  = getArgv.f ? 'w' : 'wx',
 
     // paths
     brewPath        = '/usr/local/Cellar/',
@@ -17,7 +21,7 @@ getLocalBrew.then(function(files) {
     return text;
   })
   .then(function(text) {
-    FS.write('.Brewfile', text, 'wx')
+    FS.write('.Brewfile', text, overwriteFiles)
       .then(function() {
         messaging.writeSuccess('.Brewfile');
       }, function() {

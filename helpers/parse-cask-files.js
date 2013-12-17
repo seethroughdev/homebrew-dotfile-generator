@@ -7,11 +7,13 @@ var _               = require('lodash'),
     caskFileTpl     = require('../templates/cask-file-template'),
     messaging       = require('./messaging'),
 
+    // flags
+    overwriteFiles  = getArgv.f ? 'w' : 'wx',
+
     // paths
     optPath         = '/opt/homebrew-cask/Caskroom/',
     appPath         = '/Applications',
-    caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/'
-    installAppDir   = getArgv(process.argv),
+    caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/',
 
     // instantiate arrays
     optFiles        = [],
@@ -30,13 +32,15 @@ var getOptFiles     = getLocalFiles(optPath),
 
 
 // get all local applications from Applications and /opt/
-getOptFiles.then(function(files) {
-  optFiles = files;
-}).fin();
+getOptFiles
+  .then(function(files) {
+    optFiles = files;
+  }).fin();
 
-getAppFiles.then(function(files) {
-  appFiles = files;
-}).fin();
+getAppFiles
+  .then(function(files) {
+    appFiles = files;
+  }).fin();
 
 
 // merge File list from /Application and /opt/... before comparing
@@ -46,9 +50,10 @@ gatherLocalApps.done(function() {
 
 
 // get list of all casks
-getCaskList.then(function(files) {
-  caskFiles = files;
-}).fin();
+getCaskList
+  .then(function(files) {
+    caskFiles = files;
+  }).fin();
 
 
 // find common files and feed them to file-template
@@ -58,16 +63,16 @@ getCommonCasks
     return commonCasks;
   })
   .then(function(files) {
-    var text = caskFileTpl(files, installAppDir);
+    var text = caskFileTpl(files);
     return text;
   })
   .then(function(text) {
-    FS.write('.Caskfile', text, 'wx')
+    FS.write('.Caskfile', text, overwriteFiles)
       .then(function() {
         messaging.writeSuccess('.Caskfile');
       }, function() {
         messaging.exists('.Caskfile');
-      }).fin();
+      });
   }).fin();
 
 
