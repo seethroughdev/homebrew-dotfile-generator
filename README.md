@@ -1,8 +1,20 @@
-## Brew Cask Dotfile Generator
+## Homebrew Dotfile Generator
 
-If you use [homebrew-cask](https://github.com/phinze/homebrew-cask)
-to install applications, you can use a dotfile to keep your apps
-consistent across your devices.
+You can run helpful homebrew scripts from dotfiles.
+
+This mini node app will generate 3 files for you:
+
+- a **.brew file** for running standard homebrew actions
+- a **.Brewfile** which uses the new `brew bundle` feature to store a list
+of formulae for re-installing
+- a **.Caskfile** for [homebrew-cask](https://github.com/phinze/homebrew-cask).  Which also uses the new `brew bundle` feature.  This will load casks in the same way that the .Brewfile will load formulae
+
+**Homebrew Dotfile Generator** will actually scan all of your installed homebrew formulae and create the .Brewfile script for use with brew bundle.
+
+And it will also scan all of your local Applications and installed brew-casks, and compare them with a list of all available casks to create a customized .Caskfile.
+
+I find it pretty useful.
+
 
 See an example [here](https://gist.github.com/seethroughtrees/7902470);
 
