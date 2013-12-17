@@ -8,11 +8,9 @@ module.exports = function(files, installAppDir) {
   text += '# Created by: @seethroughtrees\n';
   text += '# https://github.com/seethroughtrees/brew-cask-dotfile-generator\n\n';
 
-  text += '# Install cask\n';
-  text += 'install phinze/cask/brew-cask\n\n\n';
-
-  text += '# Install apps\n';
-
+  text += '# Install cask\n\n';
+  text += 'tap phinze/homebrew-cask\n';
+  text += 'install brew-cask\n\n\n';
 
   _.forEach(files, function(val) {
 
