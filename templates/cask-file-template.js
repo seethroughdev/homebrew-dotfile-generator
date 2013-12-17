@@ -8,9 +8,6 @@ module.exports = function(files, installAppDir) {
   text += '# Created by: @seethroughtrees\n';
   text += '# https://github.com/seethroughtrees/brew-cask-dotfile-generator\n\n';
 
-  text += '# Credit to pstadler for his Caskfile example - https://github.com/pstadler/dotfiles/blob/master/Caskfile\n\n\n';
-
-
   text += '# Install cask\n';
   text += 'install phinze/cask/brew-cask\n\n\n';
 

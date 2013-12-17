@@ -8,9 +8,6 @@ module.exports = function(files) {
   text += '# Created by: @seethroughtrees\n';
   text += '# https://github.com/seethroughtrees/brew-cask-dotfile-generator\n\n\n';
 
-  text += '# Credit to pstadler for his Brewfile example - https://github.com/pstadler/dotfiles/blob/master/Brewfile\n\n\n';
-
-
   _.forEach(files, function(val) {
     text += 'install ' + val + '\n';
   });
