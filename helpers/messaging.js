@@ -1,6 +1,6 @@
 var messaging = {
   exists: function(val) {
-    return console.log(val + ' already exists!\n* Type -f to overwrite it or specify a new path.');
+    return console.log(val + ' already exists!  Change path or add -f to force');
   },
   writeSuccess: function(val) {
     return console.log(val + ' was written to home...');
