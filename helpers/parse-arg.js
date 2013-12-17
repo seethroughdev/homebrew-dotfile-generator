@@ -8,6 +8,11 @@ argv
   .options('a', {
     alias: 'app',
     usage: 'Add app directory tag to cask install'
+  })
+  .options('p', {
+    alias: 'path',
+    usage: 'Add path to install files',
+    default: '~'
   });
 
 module.exports = argv.argv;

@@ -11,12 +11,12 @@ var FS              = require('q-io/fs'),
 
     // flags
     overwriteFiles  = getArgv.f ? 'w' : 'wx',
+    writePath       = getArgv.p || '.',
 
     // promises
-    writeBrew       = FS.write('.brew', brewTpl(), overwriteFiles),
+    writeBrew       = FS.write(writePath + '/.brew', brewTpl(), overwriteFiles),
     getLocalBrew    = startBrewFiles(),
     getCommonCasks  = FS.exists(caskPath);
-
 
 // write .brew
 writeBrew

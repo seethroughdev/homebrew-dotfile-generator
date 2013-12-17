@@ -10,6 +10,7 @@ var _               = require('lodash'),
     // flags
     overwriteFiles  = getArgv.f ? 'w' : 'wx',
     addAppPath      = getArgv.a,
+    writePath       = getArgv.p || '.',
 
     // paths
     optPath         = '/opt/homebrew-cask/Caskroom/',
@@ -68,7 +69,7 @@ getCommonCasks
     return text;
   })
   .then(function(text) {
-    FS.write('.Caskfile', text, overwriteFiles)
+    FS.write(writePath + '/.Caskfile', text, overwriteFiles)
       .then(function() {
         messaging.writeSuccess('.Caskfile');
       }, function() {

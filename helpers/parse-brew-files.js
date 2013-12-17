@@ -7,6 +7,7 @@ var FS              = require('q-io/fs'),
 
     // flags
     overwriteFiles  = getArgv.f ? 'w' : 'wx',
+    writePath       = getArgv.p || '.',
 
     // paths
     brewPath        = '/usr/local/Cellar/',
@@ -21,7 +22,7 @@ getLocalBrew.then(function(files) {
     return text;
   })
   .then(function(text) {
-    FS.write('.Brewfile', text, overwriteFiles)
+    FS.write(writePath + '/.Brewfile', text, overwriteFiles)
       .then(function() {
         messaging.writeSuccess('.Brewfile');
       }, function() {
