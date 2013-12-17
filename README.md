@@ -1,6 +1,6 @@
 ## Homebrew Dotfile Generator
 
-You can run helpful homebrew scripts from dotfiles.
+You can run homebrew scripts from dotfiles.
 
 This mini app will scan all of your brew formulae, brew-casks and locally installed Applications, and generate 3 homebrew dotfiles.  It creates:
 
@@ -11,9 +11,11 @@ of formulae for re-installing
 
 ### Examples
 
-- [.brew]() example
-- [.Brewfile]() example
-- [.Caskfile]() example
+Here's an example of each generated file:
+
+- [.brew](https://gist.github.com/seethroughtrees/8010256) example
+- [.Brewfile](https://gist.github.com/seethroughtrees/8010281) example
+- [.Caskfile](https://gist.github.com/seethroughtrees/8010303) example
 
 
 ### Installation
@@ -22,34 +24,42 @@ of formulae for re-installing
   git clone https://github.com/seethroughtrees/homebrew-dotfile-generator.git
   cd homebrew-dotfile-generator
   npm install
-  node app
-
 ```
-
-
 
 
 ### Usage
 
-Just type `node app` to generate your script file.
-
-It will generate the .cask file in the current directory.  Move it to
-your home directory after to keep it organized.
-
-After you have the file, just run `sh ~/.cask` to run the script!
-
+Just type `node app` to generate your script files.
 
 ### Options
 
-##### Set Applications Flag
+##### Specify Path
 
-In homebrew-cask you can have your applications install directly into
-the /Applications folder if you want by passing an option.
+By default, the files will be generated in the current directory.  But you can
+specify an install directory (like your home directory) with the `-p` flag.
 
-With brew-cask-dotile you can add the option to your script by adding
-the argument `-a` after.
+```
+node app -p ~
+```
 
-```node app -a```
+##### Force Option
+
+Also, the files will not overwrite automatically.  I did this as a safety
+precaution.  If you want to overwrite, just pass the `-f` flag.
+
+```
+node app -f
+```
+
+##### Set Homebrew-Cask directory
+
+[Homebrew-Cask](https://github.com/phinze/homebrew-cask) gives you the option
+to specify the /Applications directory if you want to install your casks
+directly into that folder.  If you pass the `-a` flag, Homebrew Dotfile Generator will add the `--appdir` flag directly into your script.
+
+```
+node app -a
+```
 
 
 ### Contributing
@@ -59,4 +69,6 @@ You can run the tests with `npm test`.
 
 They're written with [testem](https://github.com/airportyh/testem),
 [Mocha](http://visionmedia.github.io/mocha/) and [Chai](http://chaijs.com/).
+
+Send any pull-requests to the `incoming` branch please.
 
