@@ -1,9 +1,9 @@
     // requires
 var FS              = require('q-io/fs'),
-    getLocalFiles   = require('./get-local-files'),
-    getArgv         = require('./parse-arg'),
+    getLocalFiles   = require('../helpers/get-local-files'),
+    getArgv         = require('../helpers/parse-arg'),
     brewFileTpl     = require('../templates/brew-file-template'),
-    messaging       = require('./messaging'),
+    messaging       = require('../helpers/messaging'),
 
     // flags
     overwriteFiles  = getArgv.f ? 'w' : 'wx',

@@ -2,10 +2,10 @@
 var _               = require('lodash'),
     Q               = require('q'),
     FS              = require('q-io/fs'),
-    getArgv         = require('./parse-arg'),
-    getLocalFiles   = require('./get-local-files'),
+    getArgv         = require('../helpers/parse-arg'),
+    getLocalFiles   = require('../helpers/get-local-files'),
     caskFileTpl     = require('../templates/cask-file-template'),
-    messaging       = require('./messaging'),
+    messaging       = require('../helpers/messaging'),
 
     // flags
     overwriteFiles  = getArgv.f ? 'w' : 'wx',
