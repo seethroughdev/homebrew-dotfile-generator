@@ -4,7 +4,7 @@ You can run homebrew scripts from dotfiles.
 
 This mini app will scan all of your brew formulae, brew-casks and locally installed Applications, and generate 3 homebrew dotfiles.  It creates:
 
-- a **.brew file** for running standard homebrew actions
+- a **.brew** file for running standard homebrew actions
 - a **.Brewfile** which uses the new `brew bundle` feature to store a list
 of formulae for re-installing
 - a **.Caskfile** for [homebrew-cask](https://github.com/phinze/homebrew-cask).  Which also uses the new `brew bundle` feature.  This will load casks in the same way that the .Brewfile will load formulae
@@ -39,7 +39,7 @@ By default, the files will be generated in the current directory.  But you can
 specify an install directory (like your home directory) with the `-p` flag.
 
 ```
-node app -p ~
+node app -p ~/Desktop
 ```
 
 ##### Force Option
