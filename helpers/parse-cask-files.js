@@ -32,14 +32,10 @@ var getOptFiles     = getLocalFiles(optPath),
 // get all local applications from Applications and /opt/
 getOptFiles.then(function(files) {
   optFiles = files;
-}, function(err) {
-  callError(err);
 }).fin();
 
 getAppFiles.then(function(files) {
   appFiles = files;
-}, function(err) {
-  callError(err);
 }).fin();
 
 
@@ -52,8 +48,6 @@ gatherLocalApps.done(function() {
 // get list of all casks
 getCaskList.then(function(files) {
   caskFiles = files;
-}, function(err) {
-  callError(err);
 }).fin();
 
 
