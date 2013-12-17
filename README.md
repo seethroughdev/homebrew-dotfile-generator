@@ -2,7 +2,7 @@
 
 You can run homebrew scripts from dotfiles.
 
-This mini app will scan all of your brew formulae, brew-casks and locally installed Applications, and generate 3 homebrew dotfiles.  It creates:
+This mini app will scan all of your brew formulae, brew-casks and locally installed Applications, and generate **3 custom homebrew dotfiles**.  It creates:
 
 - a **.brew** file for running standard homebrew actions
 - a **.Brewfile** which uses the new `brew bundle` feature to store a list
