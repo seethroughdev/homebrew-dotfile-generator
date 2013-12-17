@@ -44,3 +44,5 @@ tests/*.js
 .cask
 .Brewfile
 .Caskfile
+Brewfile
+Caskfile
