@@ -5,6 +5,7 @@ var _               = require('lodash'),
     getArgv         = require('./parse-arg'),
     getLocalFiles   = require('./get-local-files'),
     caskFileTpl     = require('../templates/cask-file-template'),
+    messaging       = require('./messaging'),
 
     // paths
     optPath         = '/opt/homebrew-cask/Caskroom/',
@@ -67,18 +68,12 @@ getCommonCasks
     return text;
   })
   .then(function(text) {
-    FS.exists('.Caskfile').then(function(exists) {
-      if (exists) {
-        console.log('Caskfile already exists!\n* Type -f to overwrite it or specify a new path.');
-      } else {
-        FS.write('.Caskfile', text)
-          .then(function() {
-            console.log('- Caskfile was written to home...');
-          });
-      }
-    });
-  }, function(err) {
-    callError(err);
+    FS.write('.Caskfile', text, 'wx')
+      .then(function() {
+        messaging.writeSuccess('.Caskfile');
+      }, function() {
+        messaging.exists('.Caskfile');
+      }).fin();
   }).fin();
 
 
