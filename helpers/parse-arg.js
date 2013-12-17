@@ -12,7 +12,7 @@ argv
   .options('p', {
     alias: 'path',
     usage: 'Add path to install files',
-    default: '~'
+    default: '.'
   });
 
 module.exports = argv.argv;
