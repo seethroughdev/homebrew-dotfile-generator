@@ -28,11 +28,11 @@ getLocalBrew.then(function(files) {
         messaging.exists('.Brewfile');
       }).fin();
   }, function(err) {
-    callError(err);
+    console.log(err);
   }).fin();
 
 
 // return promise
-module.exports = function (args) {
+module.exports = function () {
   return getLocalBrew;
 };

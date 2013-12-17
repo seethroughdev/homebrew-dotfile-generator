@@ -1,6 +1,5 @@
 // requires
-var _               = require('lodash'),
-    FS              = require('q-io/fs'),
+var FS              = require('q-io/fs'),
 
     getArgv         = require('./helpers/parse-arg'),
     messaging       = require('./helpers/messaging'),
@@ -8,7 +7,6 @@ var _               = require('lodash'),
     brewTpl         = require('./templates/brew-template'),
 
     // paths
-    brewPath        = '/usr/local/Cellar/',
     caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/',
 
     // flags
@@ -24,7 +22,7 @@ var _               = require('lodash'),
 writeBrew
   .then(function() {
     messaging.writeSuccess('.brew');
-  }, function(err) {
+  }, function() {
     messaging.exists('.brew');
   }).fin();
 
@@ -42,6 +40,7 @@ getCommonCasks
   })
   .fail(function(err) {
     messaging.writeFail('Caskfile');
+    console.log(err);
   }).fin();
 
 
@@ -49,4 +48,5 @@ getCommonCasks
 getLocalBrew
   .fail(function(err) {
     messaging.writeFail('Brewfile');
+    console.log(err);
   }).fin();

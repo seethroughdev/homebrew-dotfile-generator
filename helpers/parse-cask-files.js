@@ -9,6 +9,7 @@ var _               = require('lodash'),
 
     // flags
     overwriteFiles  = getArgv.f ? 'w' : 'wx',
+    addAppPath      = getArgv.a,
 
     // paths
     optPath         = '/opt/homebrew-cask/Caskroom/',
@@ -63,7 +64,7 @@ getCommonCasks
     return commonCasks;
   })
   .then(function(files) {
-    var text = caskFileTpl(files);
+    var text = caskFileTpl(files, addAppPath);
     return text;
   })
   .then(function(text) {
@@ -77,6 +78,6 @@ getCommonCasks
 
 
 // return promise
-module.exports = function (args) {
+module.exports = function () {
   return getCommonCasks;
 };
