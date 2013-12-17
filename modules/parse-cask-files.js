@@ -69,11 +69,11 @@ getCommonCasks
     return text;
   })
   .then(function(text) {
-    FS.write(writePath + '/Caskfile', text, overwriteFiles)
+    FS.write(writePath + '/.Caskfile', text, overwriteFiles)
       .then(function() {
-        messaging.writeSuccess('Caskfile');
+        messaging.writeSuccess('.Caskfile');
       }, function() {
-        messaging.exists('Caskfile');
+        messaging.exists('.Caskfile');
       });
   }).fin();
 
