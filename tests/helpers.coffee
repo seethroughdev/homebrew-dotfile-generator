@@ -2,7 +2,11 @@ expect = require('chai').expect
 
 removeExtension = require('../helpers/remove-extension')
 parameterize    = require('../helpers/parameterize')
+messaging       = require('../helpers/messaging')
+
 argv = {}
+message = ""
+
 
 describe "helpers", ->
 
@@ -53,5 +57,12 @@ describe "helpers", ->
       expect(argv.f).to.be.undefined
       expect(argv.a).to.be.undefined
       expect(argv.p).to.be.undefined
+
+
+  describe "messaging", ->
+
+    it "should return exists message", ->
+      message = messaging.exists('test')
+      expect(message).to.equal "asdf"
 
 
