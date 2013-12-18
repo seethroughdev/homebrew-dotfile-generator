@@ -24,9 +24,9 @@ getLocalBrew.then(function(files) {
   .then(function(text) {
     FS.write(writePath + '/.Brewfile', text, overwriteFiles)
       .then(function() {
-        messaging.writeSuccess('.Brewfile');
+        console.log(messaging.writeSuccess('.Brewfile'));
       }, function() {
-        messaging.exists('.Brewfile');
+        console.log(messaging.exists('.Brewfile'));
       }).fin();
   }, function(err) {
     console.log(err);

@@ -22,9 +22,9 @@ var FS              = require('q-io/fs'),
 // write .brew
 writeBrew
   .then(function() {
-    messaging.writeSuccess('.brew');
+    console.log(messaging.writeSuccess('.brew'));
   }, function() {
-    messaging.exists('.brew');
+    console.log(messaging.exists('.brew'));
   }).fin();
 
 
@@ -33,14 +33,14 @@ getCommonCasks
   .then(function(exists) {
 
     if (!exists)
-      return messaging.exists('brew-cask');
+      return console.log(messaging.exists('brew-cask'));
 
     var startCaskFiles  = require('./modules/parse-cask-files');
     return startCaskFiles();
 
   })
   .fail(function(err) {
-    messaging.writeFail('.Caskfile');
+    console.log(messaging.writeFail('.Caskfile'));
     console.log(err);
   }).fin();
 
@@ -48,6 +48,6 @@ getCommonCasks
 // write Brewfile
 getLocalBrew
   .fail(function(err) {
-    messaging.writeFail('.Brewfile');
+    console.log(messaging.writeFail('.Brewfile'));
     console.log(err);
   }).fin();
