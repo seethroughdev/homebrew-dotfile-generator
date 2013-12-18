@@ -2,9 +2,10 @@ expect = require('chai').expect
 
 removeExtension = require('../helpers/remove-extension')
 parameterize    = require('../helpers/parameterize')
-parseArgs       = require('../helpers/parse-arg')
+argv = {}
 
 describe "helpers", ->
+
 
   describe "remove Extension", ->
 
@@ -16,6 +17,7 @@ describe "helpers", ->
       filename = removeExtension 'test'
       expect(filename).to.equal 'test'
 
+
   describe "parameterize", ->
 
     it "should replace spaces with hyphens", ->
@@ -26,14 +28,30 @@ describe "helpers", ->
       filename = parameterize "this ! statement $# has (( spaces"
       expect(filename).to.equal "this-statement-has-spaces"
 
-  describe "parse-args", ->
 
-    it "should return true if -a flag is set", ->
-      arg = "node app -a"
-      arg = arg.split(' ')
-      expect(parseArgs.getAppFlag(arg)).to.be.true
+  describe "arguments", ->
 
-    it "should return false if -a flag is not set", ->
-      arg = "node app"
-      arg = arg.split(' ')
-      expect(parseArgs.getAppFlag(arg)).to.be.false
+    before ->
+      argv = require('optimist')([ '-a', '-f', '-p']).argv
+
+    it "should detect force option", ->
+      expect(argv.f).to.be.true
+
+    it "should detect application option", ->
+      expect(argv.a).to.be.true
+
+    it "should detect path option", ->
+      expect(argv.p).to.be.true
+
+
+  describe "arguments absent", ->
+
+    before ->
+      argv = require('optimist')([]).argv
+
+    it "should not detect missing arguments", ->
+      expect(argv.f).to.be.undefined
+      expect(argv.a).to.be.undefined
+      expect(argv.p).to.be.undefined
+
+
