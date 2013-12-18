@@ -5,17 +5,17 @@ You can run homebrew scripts from dotfiles.
 This mini app will scan all of your brew formulae, brew-casks and locally installed Applications, and generate **3 custom homebrew dotfiles**.  It creates:
 
 - a **.brew** file for running standard homebrew actions
-- a **.Brewfile** which uses the new `brew bundle` feature to store a list
+- a **Brewfile** which uses the new `brew bundle` feature to store a list
 of formulae for re-installing
-- a **.Caskfile** for [homebrew-cask](https://github.com/phinze/homebrew-cask).  Which also uses the new `brew bundle` feature.  This will load casks in the same way that the .Brewfile will load formulae
+- a **Caskfile** for [homebrew-cask](https://github.com/phinze/homebrew-cask).  Which also uses the new `brew bundle` feature.  This will load casks in the same way that the Brewfile will load formulae
 
 ### Examples
 
 Here's an example of each generated file:
 
 - [.brew](https://gist.github.com/seethroughtrees/8010256) example
-- [.Brewfile](https://gist.github.com/seethroughtrees/8010281) example
-- [.Caskfile](https://gist.github.com/seethroughtrees/8010303) example
+- [Brewfile](https://gist.github.com/seethroughtrees/8010281) example
+- [Caskfile](https://gist.github.com/seethroughtrees/8010303) example
 
 
 ### Installation
@@ -82,16 +82,16 @@ You can use the **.brew** file by running it as a shell script in your terminal.
 sh ~/.brew
 ```
 
-Run your **.Brewfile** by using the new [brew bundle command](https://github.com/Homebrew/homebrew/pull/24107).
+Run your **Brewfile** by using the new [brew bundle command](https://github.com/Homebrew/homebrew/pull/24107).
 
 ```
-brew bundle /pathto/.Brewfile
+brew bundle /pathto/Brewfile
 ```
 
-Run your **.CaskFile** the same way:
+Run your **CaskFile** the same way:
 
 ```
-brew bundle /pathto/.Caskfile
+brew bundle /pathto/CaskFile
 ```
 
 
