@@ -40,7 +40,7 @@ getCommonCasks
 
   })
   .fail(function(err) {
-    console.log(messaging.writeFail('.Caskfile'));
+    console.log(messaging.writeFail('Caskfile'));
     console.log(err);
   }).fin();
 
@@ -48,6 +48,6 @@ getCommonCasks
 // write Brewfile
 getLocalBrew
   .fail(function(err) {
-    console.log(messaging.writeFail('.Brewfile'));
+    console.log(messaging.writeFail('Brewfile'));
     console.log(err);
   }).fin();

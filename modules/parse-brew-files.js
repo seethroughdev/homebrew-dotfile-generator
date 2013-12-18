@@ -22,11 +22,11 @@ getLocalBrew.then(function(files) {
     return text;
   })
   .then(function(text) {
-    FS.write(writePath + '/.Brewfile', text, overwriteFiles)
+    FS.write(writePath + '/Brewfile', text, overwriteFiles)
       .then(function() {
-        console.log(messaging.writeSuccess('.Brewfile'));
+        console.log(messaging.writeSuccess('Brewfile'));
       }, function() {
-        console.log(messaging.exists('.Brewfile'));
+        console.log(messaging.exists('Brewfile'));
       }).fin();
   }, function(err) {
     console.log(err);
