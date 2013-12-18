@@ -19,6 +19,7 @@
     "testem": "~0.5.12",
     "mocha": "~1.15.1",
     "chai": "~1.8.1",
-    "chai-http": "~0.4.0"
+    "chai-http": "~0.4.0",
+    "chai-as-promised": "~4.1.0"
   }
 }
