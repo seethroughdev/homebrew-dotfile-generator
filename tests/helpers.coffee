@@ -63,6 +63,13 @@ describe "helpers", ->
 
     it "should return exists message", ->
       message = messaging.exists('test')
-      expect(message).to.equal "asdf"
+      expect(message).to.equal "test already exists!  Change path or add -f to force."
 
+    it "should return not-installed message", ->
+      message = messaging.notInstalled('test')
+      expect(message).to.equal "Looks like you don't have test installed.  You should consider it!"
+
+    it "should return write-fail message", ->
+      message = messaging.writeFail('test')
+      expect(message).to.equal "ERROR: test was not written!"
 
