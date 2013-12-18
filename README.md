@@ -20,6 +20,9 @@ Here's an example of each generated file:
 
 ### Installation
 
+This assumes you have [homebrew](http://brew.sh/) installed.  If you don't.  That's a good
+place to start.
+
 ```
   git clone https://github.com/seethroughtrees/homebrew-dotfile-generator.git
   cd homebrew-dotfile-generator
@@ -37,6 +40,9 @@ brew update
 
 Then just type `node app` to generate your script files.
 
+```
+node app
+```
 
 ### Options
 
