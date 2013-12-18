@@ -2,7 +2,7 @@ chai            = require('chai')
 should          = require('chai').should()
 chaiAsPromised  = require("chai-as-promised")
 
-getLocalFiles   = require('../helpers/get-local-files')
+getLocalFiles   = require('../../helpers/get-local-files')
 
 
 chai.use chaiAsPromised

@@ -1,8 +1,8 @@
 expect = require('chai').expect
 
-removeExtension = require('../helpers/remove-extension')
-parameterize    = require('../helpers/parameterize')
-messaging       = require('../helpers/messaging')
+removeExtension = require('../../helpers/remove-extension')
+parameterize    = require('../../helpers/parameterize')
+messaging       = require('../../helpers/messaging')
 
 argv = {}
 message = ""
