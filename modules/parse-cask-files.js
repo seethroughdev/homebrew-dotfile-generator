@@ -14,12 +14,14 @@ var _               = require('lodash'),
 
     // paths
     optPath         = '/opt/homebrew-cask/Caskroom/',
+    appUserPath     = '/Users/' + process.env.USER + '/Applications',
     appPath         = '/Applications',
     caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/',
 
     // instantiate arrays
     optFiles        = [],
     appFiles        = [],
+    appUserFiles    = [],
     allLocalCasks   = [],
     caskFiles       = [],
     commonCasks     = [];
@@ -28,6 +30,7 @@ var _               = require('lodash'),
 // promises
 var getOptFiles     = getLocalFiles(optPath),
     getAppFiles     = getLocalFiles(appPath),
+    getUserAppFiles = getLocalFiles(appUserPath),
     getCaskList     = getLocalFiles(caskPath),
     gatherLocalApps = Q.all([getOptFiles, getAppFiles]),
     getCommonCasks  = Q.all([getCaskList, gatherLocalApps]);
@@ -39,6 +42,11 @@ getOptFiles
     optFiles = files;
   }).fin();
 
+getUserAppFiles
+  .then(function(files) {
+    appUserFiles = files;
+  }).fin();
+
 getAppFiles
   .then(function(files) {
     appFiles = files;
@@ -47,7 +55,7 @@ getAppFiles
 
 // merge File list from /Application and /opt/... before comparing
 gatherLocalApps.done(function() {
-  allLocalCasks = _.merge(optFiles, appFiles);
+  allLocalCasks = _.merge(optFiles, appFiles, appUserFiles);
 });
 
 
