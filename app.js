@@ -7,7 +7,7 @@ var FS              = require('q-io/fs'),
     brewTpl         = require('./templates/brew-template'),
 
     // paths
-    caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/',
+    caskPath        = '/usr/local/Library/Taps/caskroom/homebrew-cask/Casks/',
 
     // set by args
     overwriteFiles  = getArgv.f ? 'w' : 'wx',

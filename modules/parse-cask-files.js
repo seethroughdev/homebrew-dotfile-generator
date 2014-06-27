@@ -15,7 +15,7 @@ var _               = require('lodash'),
     // paths
     optPath         = '/opt/homebrew-cask/Caskroom/',
     appPath         = '/Applications',
-    caskPath        = '/usr/local/Library/Taps/phinze-cask/Casks/',
+    caskPath        = '/usr/local/Library/Taps/caskroom/homebrew-cask/Casks/',
 
     // instantiate arrays
     optFiles        = [],
