@@ -24,9 +24,7 @@ This assumes you have [homebrew](http://brew.sh/) installed.  If you don't.  Tha
 place to start.
 
 ```
-  git clone https://github.com/seethroughtrees/homebrew-dotfile-generator.git
-  cd homebrew-dotfile-generator
-  npm install
+  npm install -g git://github.com/seethroughtrees/homebrew-dotfile-generator.git
 ```
 
 
