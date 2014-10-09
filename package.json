@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app",
-    "test": "testem"
+    "test": "testem ci"
   },
   "author": "seethroughtrees",
   "license": "BSD-2-Clause",
