@@ -10,17 +10,17 @@
   "author": "seethroughtrees",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "lodash": "~2.4.0",
-    "q-io": "~1.10.6",
-    "q": "~0.9.7",
-    "optimist": "~0.6.0"
+    "lodash": "~2.4.1",
+    "q-io": "~1.11.5",
+    "q": "~1.0.1",
+    "optimist": "~0.6.1"
   },
   "devDependencies": {
-    "chai": "~1.8.1",
-    "chai-as-promised": "~4.1.0",
-    "chai-http": "~0.4.0",
+    "chai": "~1.9.2",
+    "chai-as-promised": "~4.1.1",
+    "chai-http": "~1.0.0",
     "coffee-script": "^1.8.0",
-    "mocha": "~1.15.1",
-    "testem": "~0.5.12"
+    "mocha": "~1.21.4",
+    "testem": "~0.6.22"
   }
 }
