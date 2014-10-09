@@ -47,7 +47,7 @@ getAppFiles
 
 // merge File list from /Application and /opt/... before comparing
 gatherLocalApps.done(function() {
-  allLocalCasks = _.merge(optFiles, appFiles);
+  allLocalCasks = _.union(optFiles, appFiles);
 });
 
 
