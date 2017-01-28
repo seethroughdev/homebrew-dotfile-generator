@@ -107,7 +107,7 @@ Feel like making this better?  Great.  Please just add tests to any changes.
 You can run the tests with `npm test`.
 
 They're written with [testem](https://github.com/airportyh/testem),
-[Mocha](http://visionmedia.github.io/mocha/) and [Chai](http://chaijs.com/).
+[Mocha](http://mochajs.org/) and [Chai](http://chaijs.com/).
 
 Send any pull-requests to the `incoming` branch please.
 
