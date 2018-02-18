@@ -1,3 +1,5 @@
+*Note: This repo was deprecated after: https://github.com/Homebrew/legacy-homebrew/issues/32952*
+
 ## Homebrew Dotfile Generator
 
 You can run homebrew scripts from dotfiles.
